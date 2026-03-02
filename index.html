@@ -3,63 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebração Especial</title>
+    <title>✨ Celebração Especial</title>
+    <meta name="description" content="Crie e compartilhe mensagens de celebração especiais">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div id="form-container">
-        <h1>Criar Mensagem de Celebração</h1>
-        <form id="celebration-form">
-            <label for="sender">De (quem está enviando):</label>
-            <input type="text" id="sender" placeholder="Seu nome">
+    <!-- Background Animado -->
+    <div class="bg-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="particles" id="particles"></div>
+    </div>
 
-            <label for="recipient">Para (quem está recebendo):</label>
-            <input type="text" id="recipient" placeholder="Nome da pessoa">
+    <!-- Botão de Tema -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i class="fas fa-moon"></i>
+    </button>
 
-            <label for="occasion">Ocasião Especial:</label>
-            <input type="text" id="occasion" placeholder="Ex: Aniversário, Natal, etc." required>
+    <!-- ========================================
+         FORMULÁRIO DE CRIAÇÃO
+    ======================================== -->
+    <main id="form-container" class="main-card">
+        <header class="card-header">
+            <div class="header-decoration">
+                <span class="sparkle">✦</span>
+                <span class="sparkle">✦</span>
+                <span class="sparkle">✦</span>
+            </div>
+            <h1>Criar Mensagem de Celebração</h1>
+            <p class="subtitle">Compartilhe momentos especiais com quem você ama</p>
+        </header>
 
-            <label for="date">Data da Ocasião (opcional):</label>
-            <input type="date" id="date">
+        <form id="celebration-form" aria-label="Formulário de celebração">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="sender">
+                        <span class="icon">👤</span> De (quem está enviando)
+                    </label>
+                    <input type="text" id="sender" placeholder="Seu nome" autocomplete="name">
+                </div>
 
-            <label for="message">Mensagem de Texto:</label>
-            <textarea id="message" placeholder="Digite sua mensagem de felicitação..." required></textarea>
+                <div class="input-group">
+                    <label for="recipient">
+                        <span class="icon">💝</span> Para (quem está recebendo)
+                    </label>
+                    <input type="text" id="recipient" placeholder="Nome da pessoa amada">
+                </div>
 
-            <label for="link">Link para Compartilhar (opcional):</label>
-            <input type="url" id="link" placeholder="Ex: https://exemplo.com">
+                <div class="input-group full-width">
+                    <label for="occasion">
+                        <span class="icon">🎉</span> Ocasião Especial <span class="required">*</span>
+                    </label>
+                    <input type="text" id="occasion" placeholder="Ex: Aniversário, Natal, Dia dos Namorados..." required>
+                </div>
 
-            <label for="photo">Foto da Comemoração (opcional):</label>
-            <input type="file" id="photo" accept="image/*">
+                <div class="input-group">
+                    <label for="date">
+                        <span class="icon">📅</span> Data da Ocasião
+                    </label>
+                    <input type="date" id="date">
+                </div>
 
-            <label for="like1">Coisas que eu gosto em você 1:</label>
-            <input type="text" id="like1" placeholder="Ex: Sorriso">
+                <div class="input-group full-width">
+                    <label for="message">
+                        <span class="icon">💌</span> Mensagem de Texto <span class="required">*</span>
+                    </label>
+                    <textarea id="message" placeholder="Digite sua mensagem de felicitação com todo o seu carinho..." required></textarea>
+                    <div class="char-count"><span id="charCurrent">0</span>/500</div>
+                </div>
 
-            <label for="like2">Coisas que eu gosto em você 2:</label>
-            <input type="text" id="like2" placeholder="Ex: Gentileza">
+                <div class="input-group full-width">
+                    <label>
+                        <span class="icon">🔗</span> Link e Mídia
+                    </label>
+                    <div class="media-inputs">
+                        <input type="url" id="link" placeholder="🔗 Link para compartilhar">
+                        <input type="url" id="youtube" placeholder="🎵 Link do YouTube">
+                    </div>
+                </div>
 
-            <label for="like3">Coisas que eu gosto em você 3:</label>
-            <input type="text" id="like3" placeholder="Ex: Inteligência">
+                <div class="input-group full-width">
+                    <label>
+                        <span class="icon">📎</span> Arquivos
+                    </label>
+                    <div class="file-drop-zone" id="dropZone">
+                        <div class="drop-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste arquivos aqui ou clique para selecionar</p>
+                            <span>Foto (JPG, PNG) • Áudio (MP3)</span>
+                        </div>
+                        <input type="file" id="audio" accept="audio/*" hidden>
+                        <input type="file" id="photo" accept="image/*" hidden>
+                        <div class="file-list" id="fileList"></div>
+                    </div>
+                </div>
 
-            <button type="submit">Gerar Link de Celebração</button>
+                <!-- Seção de "Coisas que eu gosto em você" -->
+                <div class="likes-section full-width">
+                    <h3><span class="heart-icon">❤️</span> Coisas que eu gosto em você</h3>
+                    <div class="likes-grid">
+                        <div class="input-group">
+                            <input type="text" id="like1" placeholder="⭐ Primeiro motivo">
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="like2" placeholder="⭐ Segundo motivo">
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="like3" placeholder="⭐ Terceiro motivo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span class="btn-icon">🎊</span>
+                <span class="btn-text">Gerar Link de Celebração</span>
+                <span class="btn-icon">🎊</span>
+            </button>
         </form>
-        <div id="generated-link" style="display: none;">
-            <p>Link gerado:</p>
-            <input type="text" id="link-output" readonly>
-            <button onclick="copyLink()">Copiar Link</button>
+
+        <!-- Resultado -->
+        <div id="generated-link" class="result-card" style="display: none;" role="region" aria-live="polite">
+            <div class="result-header">
+                <i class="fas fa-check-circle"></i>
+                <p>Seu link está pronto!</p>
+            </div>
+            <div class="result-content">
+                <input type="text" id="link-output" readonly aria-label="Link gerado">
+                <div class="result-actions">
+                    <button onclick="copyLink()" class="action-btn copy">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                    <button onclick="shareWhatsApp()" class="action-btn whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button onclick="generateQRCode()" class="action-btn qrcode">
+                        <i class="fas fa-qrcode"></i> QR Code
+                    </button>
+                </div>
+            </div>
+            <div id="qrcode-container" class="qrcode-modal" style="display: none;">
+                <div class="qrcode-content">
+                    <span class="close-qr" onclick="closeQRCode()">&times;</span>
+                    <div id="qrcode"></div>
+                    <p>Escaneie para abrir</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview do Cartão -->
+        <div id="preview-card" class="preview-section" style="display: none;">
+            <h3><i class="fas fa-eye"></i> Preview</h3>
+            <div class="preview-card">
+                <div class="preview-content" id="previewContent">
+                    <!-- Preview será preenchido via JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========================================
+         PÁGINA DE EXIBIÇÃO
+    ======================================== -->
+    <div id="celebration-display" class="display-card" style="display: none;" role="main">
+        <div class="display-header">
+            <span class="decoration left">✦</span>
+            <h1 id="occasion-title"></h1>
+            <span class="decoration right">✦</span>
+        </div>
+
+        <div class="display-meta">
+            <p id="recipient-text" class="recipient"></p>
+            <p id="sender-text" class="sender"></p>
+        </div>
+
+        <div id="date-text" class="date-badge" style="display: none;"></div>
+
+        <div class="display-message" id="message-text"></div>
+
+        <div id="link-text" class="display-link"></div>
+
+        <!-- Player do YouTube -->
+        <div id="youtube-player" class="media-section" style="display: none;"></div>
+
+        <!-- Player de Áudio MP3 -->
+        <div id="audio-player" class="media-section" style="display: none;"></div>
+
+        <!-- Likes Section -->
+        <div id="likes-text" class="likes-display"></div>
+
+        <!-- Foto -->
+        <img id="photo-display" src="" alt="Foto da Comemoração" style="display: none;" class="display-photo">
+
+        <!-- Ações -->
+        <div class="display-actions">
+            <button class="action-like" id="likeBtn" onclick="toggleLike()">
+                <i class="fas fa-heart"></i>
+                <span id="likeCount">0</span>
+            </button>
+            <button class="action-share" onclick="shareCelebration()">
+                <i class="fas fa-share-alt"></i> Compartilhar
+            </button>
+        </div>
+
+        <div class="display-footer">
+            <p>Visualizações: <span id="viewCount">1</span></p>
         </div>
     </div>
 
-    <div id="celebration-display" style="display: none;">
-        <h1 id="occasion-title"></h1>
-        <p id="recipient-text"></p>
-        <p id="sender-text"></p>
-        <p id="date-text"></p>
-        <p id="message-text"></p>
-        <p id="link-text"></p>
-        <div id="likes-text" style="margin-top: 20px;"></div>
-        <img id="photo-display" src="" alt="Foto da Comemoração" style="max-width: 100%; height: auto; margin-top: 20px; display: none;">
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="toast-icon"></i>
+        <span class="toast-message"></span>
     </div>
 
+    <!-- Emoji Picker -->
+    <div class="emoji-picker-container">
+        <button class="emoji-trigger" id="emojiTrigger">
+            <i class="fas fa-smile"></i>
+        </button>
+        <div class="emoji-picker" id="emojiPicker" style="display: none;">
+            <div class="emoji-category">
+                <button class="emoji-cat active" data-category="smileys">😀</button>
+                <button class="emoji-cat" data-category="hearts">❤️</button>
+                <button class="emoji-cat" data-category="celebration">🎉</button>
+                <button class="emoji-cat" data-category="nature">🌸</button>
+                <button class="emoji-cat" data-category="food">🍰</button>
+            </div>
+            <div class="emoji-grid" id="emojiGrid"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
