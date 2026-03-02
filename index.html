@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebração Especial</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="form-container">
+        <h1>Criar Mensagem de Celebração</h1>
+        <form id="celebration-form">
+            <label for="sender">De (quem está enviando):</label>
+            <input type="text" id="sender" placeholder="Seu nome">
+
+            <label for="recipient">Para (quem está recebendo):</label>
+            <input type="text" id="recipient" placeholder="Nome da pessoa">
+
+            <label for="occasion">Ocasião Especial:</label>
+            <input type="text" id="occasion" placeholder="Ex: Aniversário, Natal, etc." required>
+
+            <label for="date">Data da Ocasião (opcional):</label>
+            <input type="date" id="date">
+
+            <label for="message">Mensagem de Texto:</label>
+            <textarea id="message" placeholder="Digite sua mensagem de felicitação..." required></textarea>
+
+            <label for="link">Link para Compartilhar (opcional):</label>
+            <input type="url" id="link" placeholder="Ex: https://exemplo.com">
+
+            <label for="photo">Foto da Comemoração (opcional):</label>
+            <input type="file" id="photo" accept="image/*">
+
+            <label for="like1">Coisas que eu gosto em você 1:</label>
+            <input type="text" id="like1" placeholder="Ex: Sorriso">
+
+            <label for="like2">Coisas que eu gosto em você 2:</label>
+            <input type="text" id="like2" placeholder="Ex: Gentileza">
+
+            <label for="like3">Coisas que eu gosto em você 3:</label>
+            <input type="text" id="like3" placeholder="Ex: Inteligência">
+
+            <button type="submit">Gerar Link de Celebração</button>
+        </form>
+        <div id="generated-link" style="display: none;">
+            <p>Link gerado:</p>
+            <input type="text" id="link-output" readonly>
+            <button onclick="copyLink()">Copiar Link</button>
+        </div>
+    </div>
+
+    <div id="celebration-display" style="display: none;">
+        <h1 id="occasion-title"></h1>
+        <p id="recipient-text"></p>
+        <p id="sender-text"></p>
+        <p id="date-text"></p>
+        <p id="message-text"></p>
+        <p id="link-text"></p>
+        <div id="likes-text" style="margin-top: 20px;"></div>
+        <img id="photo-display" src="" alt="Foto da Comemoração" style="max-width: 100%; height: auto; margin-top: 20px; display: none;">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
